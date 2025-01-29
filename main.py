@@ -21,6 +21,8 @@ while True:
     print("3 - Gráfico Boxplot da coluna escolhida.")
     print("4 - Exibir correlação entre as colunas.")
     print("5 - dados estatísticos de determinada coluna")
+    print("6 - Boxplot de distribuição do preço pela coluna desejada.")
+    print("7 - grafico de dispersão da coluna deseja em comparação com o preço.")
     print()
 
     opcao = str(input("Digite a opção desejada: "))
@@ -49,3 +51,11 @@ while True:
     elif opcao == "5":
         coluna = input_coluna()
         estatisticas_coluna(df, coluna)
+
+    elif opcao == "6":
+        coluna = input_coluna()
+        boxplot_com_preco(df, coluna)
+
+    elif opcao == "7":
+        coluna = input_coluna()
+        grafico_dispersao_preco(df, coluna)

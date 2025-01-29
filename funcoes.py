@@ -69,3 +69,21 @@ def estatisticas_coluna(df, coluna):
     print(f"Valor Máximo: {df[coluna].max()}")
     print(f"Percentil 25%: {df[coluna].quantile(0.25):.2f}")
     print(f"Percentil 75%: {df[coluna].quantile(0.75):.2f}")
+
+def boxplot_com_preco(df, coluna):
+    plt.figure(figsize=(12,6))
+    sns.boxplot(x=coluna, y='price', data=df)
+    plt.xticks(rotation=90) 
+    plt.title("Distribuição dos Preços por " + coluna)
+    plt.xlabel(coluna)
+    plt.ylabel("Preço")
+    plt.show()
+
+def grafico_dispersao_preco(df, coluna):
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(x=df[coluna], y=df["price"], alpha=0.5)
+    plt.title("Relação entre Número de " + coluna + " e Preço")
+    plt.xlabel("Número " + coluna)
+    plt.ylabel("Preço")
+    plt.show()
+
