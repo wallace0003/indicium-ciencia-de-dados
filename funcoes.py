@@ -38,3 +38,12 @@ def grafico_boxplot(df, coluna:str):
 def input_coluna():
     coluna = str(input("Digite a coluna que deseja analizar: "))
     return coluna
+
+def mapa_correlacao(df):
+    # Calcular a matriz de correlação
+    correlacao = df.select_dtypes(include=['number']).corr()
+    # Criar o heatmap
+    plt.figure(figsize=(12, 8))
+    sns.heatmap(correlacao, annot=True, fmt=".2f", cmap="coolwarm", linewidths=0.5)
+    plt.title("Mapa de Calor das Correlações")
+    plt.show()
