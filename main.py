@@ -23,6 +23,7 @@ while True:
     print("5 - dados estatísticos de determinada coluna")
     print("6 - Boxplot de distribuição do preço pela coluna desejada.")
     print("7 - grafico de dispersão da coluna deseja em comparação com o preço.")
+    print("8 - Gráfico de relação entre preço médio e demanda por bairro.")
     print()
 
     opcao = str(input("Digite a opção desejada: "))
@@ -59,3 +60,14 @@ while True:
     elif opcao == "7":
         coluna = input_coluna()
         grafico_dispersao_preco(df, coluna)
+
+    elif opcao == "8":
+        preco_demanda = df.groupby('bairro_group').agg(
+            {'price': 'mean', 'numero_de_reviews': 'sum'}).reset_index()
+        plt.figure(figsize=(10, 6))
+        sns.scatterplot(x='price', y='numero_de_reviews', hue='bairro_group', data=preco_demanda, s=100)
+        plt.title("Relação entre Preço Médio e Demanda por Bairro")
+        plt.xlabel("Preço Médio")
+        plt.ylabel("Número Total de Reviews")
+        plt.legend(title="Grupo de Bairro")
+        plt.show()
