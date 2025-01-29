@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 from time import sleep
-
+import pandas as pd
 
 def grafico_frequancia(df, coluna:str):
     try:
@@ -47,3 +47,25 @@ def mapa_correlacao(df):
     sns.heatmap(correlacao, annot=True, fmt=".2f", cmap="coolwarm", linewidths=0.5)
     plt.title("Mapa de Calor das Correlações")
     plt.show()
+
+def estatisticas_coluna(df, coluna):
+    if coluna not in df.columns:
+        print(f"A coluna '{coluna}' não existe no DataFrame.")
+        return
+    
+    if not pd.api.types.is_numeric_dtype(df[coluna]):
+        print(f"A coluna '{coluna}' não é numérica.")
+        return
+
+    print(f"Estatísticas para a coluna: {coluna}\n")
+    print(df[coluna].describe())
+    print("\nMétricas individuais:")
+    print(f"Média: {df[coluna].mean():.2f}")
+    print(f"Mediana: {df[coluna].median():.2f}")
+    print(f"Moda: {list(df[coluna].mode())}")
+    print(f"Desvio Padrão: {df[coluna].std():.2f}")
+    print(f"Variância: {df[coluna].var():.2f}")
+    print(f"Valor Mínimo: {df[coluna].min()}")
+    print(f"Valor Máximo: {df[coluna].max()}")
+    print(f"Percentil 25%: {df[coluna].quantile(0.25):.2f}")
+    print(f"Percentil 75%: {df[coluna].quantile(0.75):.2f}")

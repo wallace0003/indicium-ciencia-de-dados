@@ -20,6 +20,7 @@ while True:
     print("2 - Verificar tipos de dados do data frame.")
     print("3 - Gráfico Boxplot da coluna escolhida.")
     print("4 - Exibir correlação entre as colunas.")
+    print("5 - dados estatísticos de determinada coluna")
     print()
 
     opcao = str(input("Digite a opção desejada: "))
@@ -44,3 +45,7 @@ while True:
 
     elif opcao == "4":
         mapa_correlacao(df)
+
+    elif opcao == "5":
+        coluna = input_coluna()
+        estatisticas_coluna(df, coluna)
