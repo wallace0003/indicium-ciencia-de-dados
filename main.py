@@ -7,11 +7,13 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
+
 df = pd.read_csv("dados/dados_indicium.csv")
 df["nome"].fillna("indefinido", inplace=True)
 df["host_name"].fillna("sem nome", inplace=True)
 df["reviews_por_mes"].fillna(0, inplace=True)
 df["ultima_review"].fillna(0, inplace=True)
+
 
 while True:
     print()
@@ -23,6 +25,10 @@ while True:
     print("5 - dados estatísticos de determinada coluna")
     print("6 - Boxplot de distribuição do preço pela coluna desejada.")
     print("7 - grafico de dispersão da coluna deseja em comparação com o preço.")
+    print("8 - Gráfico de relação entre preço médio e demanda por bairro.")
+    print("9 - Criação de gráfico de linha da coluna desejada pelo preço médio")
+    print("10 - indentificar correlação entre duas variáveis.")
+    print("11 - Exibir gráfico de barras das palavras mais comuns usadas em locais de maior preço.")
     print()
 
     opcao = str(input("Digite a opção desejada: "))
@@ -59,3 +65,31 @@ while True:
     elif opcao == "7":
         coluna = input_coluna()
         grafico_dispersao_preco(df, coluna)
+
+    elif opcao == "8":
+        preco_demanda = df.groupby('bairro_group').agg(
+            {'price': 'mean', 'numero_de_reviews': 'sum'}).reset_index()
+        plt.figure(figsize=(10, 6))
+        sns.scatterplot(x='price', y='numero_de_reviews', hue='bairro_group', data=preco_demanda, s=100)
+        plt.title("Relação entre Preço Médio e Demanda por Bairro")
+        plt.xlabel("Preço Médio")
+        plt.ylabel("Número Total de Reviews")
+        plt.legend(title="Grupo de Bairro")
+        plt.show()
+    
+    elif opcao == "9":
+        coluna = input_coluna()
+        grafico_linha_preco_medio(df, coluna)
+
+    elif opcao == "10":
+        coluna1 = input_coluna()
+        coluna2 = input_coluna()
+        correlacao = df[[coluna1, coluna2]].corr()
+        print("Correlação:")
+        print()
+        print(correlacao)
+        print()
+    
+    elif opcao == "11":
+        analisar_palavras_preco(df)
+        
