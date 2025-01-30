@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
 from time import sleep
 import pandas as pd
@@ -87,3 +86,12 @@ def grafico_dispersao_preco(df, coluna):
     plt.ylabel("Preço")
     plt.show()
 
+def grafico_linha_preco_medio(df, coluna):
+    preco_medio = df.groupby(coluna)['price'].mean().reset_index()
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(x=coluna, y='price', data=preco_medio, marker='o')
+    plt.title(f"Preço Médio por {coluna}")
+    plt.xlabel(coluna)
+    plt.ylabel("Preço Médio")
+    plt.grid(True)  
+    plt.show()

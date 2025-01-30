@@ -24,6 +24,8 @@ while True:
     print("6 - Boxplot de distribuição do preço pela coluna desejada.")
     print("7 - grafico de dispersão da coluna deseja em comparação com o preço.")
     print("8 - Gráfico de relação entre preço médio e demanda por bairro.")
+    print("9 - Criação de gráfico de linha da coluna desejada pelo preço médio")
+    print("10 - indentificar correlação entre duas variáveis.")
     print()
 
     opcao = str(input("Digite a opção desejada: "))
@@ -71,3 +73,16 @@ while True:
         plt.ylabel("Número Total de Reviews")
         plt.legend(title="Grupo de Bairro")
         plt.show()
+    
+    elif opcao == "9":
+        coluna = input_coluna()
+        grafico_linha_preco_medio(df, coluna)
+
+    elif opcao == "10":
+        coluna1 = input_coluna()
+        coluna2 = input_coluna()
+        correlacao = df[[coluna1, coluna2]].corr()
+        print("Correlação:")
+        print()
+        print(correlacao)
+        print()
