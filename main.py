@@ -7,11 +7,13 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
+
 df = pd.read_csv("dados/dados_indicium.csv")
 df["nome"].fillna("indefinido", inplace=True)
 df["host_name"].fillna("sem nome", inplace=True)
 df["reviews_por_mes"].fillna(0, inplace=True)
 df["ultima_review"].fillna(0, inplace=True)
+
 
 while True:
     print()
@@ -26,6 +28,7 @@ while True:
     print("8 - Gráfico de relação entre preço médio e demanda por bairro.")
     print("9 - Criação de gráfico de linha da coluna desejada pelo preço médio")
     print("10 - indentificar correlação entre duas variáveis.")
+    print("11 - Exibir gráfico de barras das palavras mais comuns usadas em locais de maior preço.")
     print()
 
     opcao = str(input("Digite a opção desejada: "))
@@ -86,3 +89,7 @@ while True:
         print()
         print(correlacao)
         print()
+    
+    elif opcao == "11":
+        analisar_palavras_preco(df)
+        

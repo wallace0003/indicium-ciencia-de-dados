@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from time import sleep
 import pandas as pd
+import numpy as np
+import pandas as pd
+from collections import Counter
 
 def grafico_frequancia(df, coluna:str):
     try:
@@ -95,3 +98,40 @@ def grafico_linha_preco_medio(df, coluna):
     plt.ylabel("Preço Médio")
     plt.grid(True)  
     plt.show()
+
+def analisar_palavras_preco(df):
+    limite_alto_valor = df['price'].quantile(0.75)
+    df['categoria_preco'] = np.where(df['price'] >= limite_alto_valor, 'alto', 'medio-baixo')
+    df['palavras_nome'] = df['nome'].str.lower().str.split()
+
+    palavras_alto = [palavra for palavras in df[df['categoria_preco'] == 
+                                                'alto']['palavras_nome'] for palavra in palavras]
+    palavras_baixo = [palavra for palavras in df[df['categoria_preco'] == 
+                                                 'medio-baixo']['palavras_nome'] for palavra in palavras]
+
+    contador_alto = Counter(palavras_alto)
+    contador_baixo = Counter(palavras_baixo)
+
+    df_palavras = pd.DataFrame({'palavra': list(contador_alto.keys())})
+    df_palavras['freq_alto'] = df_palavras['palavra'].map(contador_alto)
+    df_palavras['freq_baixo'] = df_palavras['palavra'].map(contador_baixo).fillna(0)
+
+    df_palavras['relevancia'] = df_palavras['freq_alto'] / (df_palavras['freq_baixo'] + 1)
+
+    df_palavras.sort_values(by='relevancia', ascending=False, inplace=True)
+
+    top_comparacao = df_palavras.head(15)
+    
+    x = np.arange(len(top_comparacao))  
+    width = 0.4 
+
+    plt.figure(figsize=(14, 6))
+    plt.bar(x - width/2, top_comparacao['freq_alto'], width, label='Locais Caros', color='royalblue')
+    plt.bar(x + width/2, top_comparacao['freq_baixo'], width, label='Locais mais em conta', color='salmon')
+    plt.xlabel("Palavras")
+    plt.ylabel("Frequência")
+    plt.title("Comparação de frequência de palavras entre locais caros e mais em conta")
+    plt.xticks(x, top_comparacao['palavra'], rotation=45)
+    plt.legend()
+    plt.show()
+    return df_palavras.head(20)
