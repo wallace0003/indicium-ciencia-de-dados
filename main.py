@@ -2,10 +2,7 @@ from time import sleep
 from funcoes import *
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
 
 
 df = pd.read_csv("dados/dados_indicium.csv")
@@ -92,4 +89,8 @@ while True:
     
     elif opcao == "11":
         analisar_palavras_preco(df)
+    
+    else:
+        print("Digite apenas as opções que foram listadas acima!")
+    
         
