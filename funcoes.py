@@ -3,7 +3,6 @@ import seaborn as sns
 from time import sleep
 import pandas as pd
 import numpy as np
-import pandas as pd
 from collections import Counter
 
 def grafico_frequancia(df, coluna:str):
@@ -53,6 +52,7 @@ def mapa_correlacao(df):
 def estatisticas_coluna(df, coluna):
     if coluna not in df.columns:
         print(f"A coluna '{coluna}' não existe no DataFrame.")
+        sleep(1)
         return
     
     if not pd.api.types.is_numeric_dtype(df[coluna]):
@@ -73,6 +73,11 @@ def estatisticas_coluna(df, coluna):
     print(f"Percentil 75%: {df[coluna].quantile(0.75):.2f}")
 
 def boxplot_com_preco(df, coluna):
+    if coluna not in df.columns:
+        print(f"A coluna '{coluna}' não existe no DataFrame.")
+        sleep(1)
+        return
+
     plt.figure(figsize=(12,6))
     sns.boxplot(x=coluna, y='price', data=df)
     plt.xticks(rotation=90) 
@@ -82,6 +87,11 @@ def boxplot_com_preco(df, coluna):
     plt.show()
 
 def grafico_dispersao_preco(df, coluna):
+    if coluna not in df.columns:
+        print(f"A coluna '{coluna}' não existe no DataFrame.")
+        sleep(1)
+        return
+        
     plt.figure(figsize=(10, 6))
     sns.scatterplot(x=df[coluna], y=df["price"], alpha=0.5)
     plt.title("Relação entre Número de " + coluna + " e Preço")
@@ -90,6 +100,11 @@ def grafico_dispersao_preco(df, coluna):
     plt.show()
 
 def grafico_linha_preco_medio(df, coluna):
+    if coluna not in df.columns:
+        print(f"A coluna '{coluna}' não existe no DataFrame.")
+        sleep(1)
+        return
+        
     preco_medio = df.groupby(coluna)['price'].mean().reset_index()
     plt.figure(figsize=(10, 6))
     sns.lineplot(x=coluna, y='price', data=preco_medio, marker='o')
