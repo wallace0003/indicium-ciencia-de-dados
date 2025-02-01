@@ -11,6 +11,8 @@ df["host_name"].fillna("sem nome", inplace=True)
 df["reviews_por_mes"].fillna(0, inplace=True)
 df["ultima_review"].fillna(0, inplace=True)
 
+print(df.shape)
+sleep(10)
 
 while True:
     print()
